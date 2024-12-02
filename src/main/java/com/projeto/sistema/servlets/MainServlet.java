@@ -21,30 +21,34 @@ import java.util.Set;
 /**
  * Servlet principal responsável pelo roteamento e injeção de dependências.
  */
+
 public class MainServlet extends HttpServlet {
 
-    private final Map<String, Command> rotaMap = new HashMap<>();
+    private static final long serialVersionUID = 1L;
+	private final Map<String, Command> rotaMap = new HashMap<>();
     private final DependencyManager dependencyManager = new DependencyManager();
+    private final String BASE_PACKAGE = "com.projeto.sistema";
+    private Reflections reflections;
+    
 
     @Override
     public void init() throws ServletException {
         try {
-            scanForRoutesAndDependencies("com.projeto.sistema"); // Indique o pacote para escanear
+        	this.reflections = new Reflections(
+            		this.BASE_PACKAGE,
+                    Scanners.MethodsAnnotated,
+                    Scanners.FieldsAnnotated,
+                    Scanners.TypesAnnotated
+            );
+            searchForRoute();
+            searchForInject();
         } catch (Exception e) {
-            throw new ServletException("Erro ao inicializar rotas", e);
+            throw new ServletException("Erro durante a inicialização do MainServlet", e);
         }
     }
 
-    private void scanForRoutesAndDependencies(String basePackage) throws Exception {
-        Reflections reflections = new Reflections(
-                basePackage,
-                Scanners.MethodsAnnotated,
-                Scanners.FieldsAnnotated,
-                Scanners.TypesAnnotated
-        );
-
-        // Detecta e registra rotas
-        Set<Method> methodsWithRoutes = reflections.getMethodsAnnotatedWith(Rota.class);
+    private void searchForRoute() throws Exception {
+        Set<Method> methodsWithRoutes = this.reflections.getMethodsAnnotatedWith(Rota.class);
         for (Method method : methodsWithRoutes) {
             Class<?> controllerClass = method.getDeclaringClass();
             Object controllerInstance = dependencyManager.getOrCreateInstance(controllerClass);
@@ -57,9 +61,10 @@ public class MainServlet extends HttpServlet {
             // Adiciona um RouteCommand ao mapa de rotas
             rotaMap.put(rota.value(), new RouteCommand(controllerInstance, method));
         }
-
-        // Injeta dependências nos campos anotados
-        Set<Field> fieldsWithInject = reflections.getFieldsAnnotatedWith(Inject.class);
+    }
+    
+    private void searchForInject() throws Exception {
+        Set<Field> fieldsWithInject = this.reflections.getFieldsAnnotatedWith(Inject.class);
         dependencyManager.injectDependencies(fieldsWithInject);
     }
 
