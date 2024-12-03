@@ -8,6 +8,7 @@ import com.projeto.sistema.repositories.UserRepositoryInterface;
 import com.projeto.sistema.models.User;
 import com.projeto.sistema.utils.PasswordUtils;
 
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -40,7 +41,7 @@ public class UserController {
      * @param resp Objeto {@link HttpServletResponse} para enviar a resposta HTTP.
      * @throws IOException Caso ocorra algum erro ao ler a entrada ou escrever a saída.
      */
-    @Rota("/usuario/registrar")
+    @Rota("/usuario")
     public void registerUser(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         if (!req.getMethod().equalsIgnoreCase("POST")) {
             resp.setStatus(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
@@ -119,7 +120,8 @@ public class UserController {
      * @throws IOException Caso ocorra algum erro ao escrever a saída.
      */
     private void sendJsonResponse(HttpServletResponse resp, Map<String, Object> data) throws IOException {
-        resp.setContentType("application/json");
-        objectMapper.writeValue(resp.getWriter(), data);
+    resp.setContentType("application/json");
+    resp.setCharacterEncoding("UTF-8"); // Configura o charset para UTF-8
+    objectMapper.writeValue(resp.getWriter(), data);
     }
 }
