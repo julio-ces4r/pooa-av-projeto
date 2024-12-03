@@ -52,7 +52,7 @@ public class UserController {
         String email = body.get("email");
         String password = body.get("password");
 
-        if (email == null || password == null) {
+        if ((email == null || password == null) || (email == "" || password == "")) {
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             sendJsonResponse(resp, Map.of("error", "Email e senha são obrigatórios."));
             return;
@@ -86,7 +86,7 @@ public class UserController {
         String email = body.get("email");
         String password = body.get("password");
 
-        if (email == null || password == null) {
+     if ((email == null || password == null) || (email == "" || password == "")) {
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             sendJsonResponse(resp, Map.of("error", "Email e senha são obrigatórios."));
             return;
