@@ -90,16 +90,10 @@ public class DependencyManager {
             Class<?> declaringClass = field.getDeclaringClass();
             Object instance = getOrCreateInstance(declaringClass);
             
-            System.out.println(instance);
-
             field.setAccessible(true);
             Class<?> fieldType = field.getType();
             Object dependency = resolveDependency(fieldType);
-            
-            System.out.println(fieldType);
-
-            System.out.println(dependency);
-            
+                        
             if (dependency == null) {
                 throw new IllegalStateException("Não foi possível resolver dependência para o campo: " 
                                                 + field.getName() + " em " + declaringClass.getName());
