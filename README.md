@@ -2,5 +2,5 @@
 
 
 ## Diagramas
-<img width="1675" alt="Captura de Tela 2024-11-27 às 16 51 57" src="https://github.com/user-attachments/assets/2f47c4a4-9a51-44b4-a0d8-f4c8dbf31e66">
-<img width="1670" alt="Captura de Tela 2024-11-27 às 16 52 11" src="https://github.com/user-attachments/assets/95264bee-e762-47e0-ae69-0a24e3065d21">
+<img width="1669" alt="Captura de Tela 2024-12-03 às 13 50 58" src="https://github.com/user-attachments/assets/16ead589-677d-457c-a8c3-f84091a9f591">
+<img width="1168" alt="Captura de Tela 2024-12-03 às 13 54 33" src="https://github.com/user-attachments/assets/ff1ba946-63d6-4569-a6d9-71613b9510ce">
